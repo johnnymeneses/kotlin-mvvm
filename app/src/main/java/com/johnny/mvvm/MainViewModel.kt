@@ -15,6 +15,7 @@ class MainViewModel : ViewModel() {
         mTextWelcome.value = "Bom dia!"
     }
 
+    //Expondo a variavel privada mTextWelcome
     fun welcome(): LiveData<String> {
         return mTextWelcome
     }
