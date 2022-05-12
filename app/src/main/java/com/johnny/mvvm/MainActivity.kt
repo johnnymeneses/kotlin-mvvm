@@ -14,24 +14,27 @@ import com.johnny.mvvm.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
 //    private lateinit var mContext: Context
-    private lateinit var mMainViewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
+    private lateinit var mMainViewModel: MainViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-
 
         supportActionBar?.hide()
 
         //Instanciar ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
+        mMainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 //
 //
 //        // Variáveis
 //        this.mContext = this
 //        this.mMainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-          mMainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
 //
 //        // Eventos
 //        binding.buttonLogin.setOnClickListener(this)
@@ -47,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         mMainViewModel.welcome().observe(this, Observer {
             binding.textWelcome.text = it
         })
+    }
 
 
 
