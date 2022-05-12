@@ -11,11 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.johnny.mvvm.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-//    private lateinit var mContext: Context
     private lateinit var binding: ActivityMainBinding
-    private lateinit var mMainViewModel: MainViewModel
+    private lateinit var viewModel: MainViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,44 +27,40 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        mMainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-//
-//
-//        // Variáveis
-//        this.mContext = this
-//        this.mMainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-//
-//        // Eventos
-//        binding.buttonLogin.setOnClickListener(this)
-//
-//        // Inicializa observers
-//        this.createObservers()
+        // Eventos
+        binding.btnLogin.setOnClickListener(this)
 
-          setObserver()
+
+        setObserver()
+    }
+
+    override fun onClick(v: View) {
+        if (v.id == R.id.btn_login) {
+            val email = binding.editEmail.text.toString()
+            val password = binding.editPassword.text.toString()
+
+            viewModel.doLogin(email, password)
+
+
+        }
     }
 
 
     fun setObserver() {
-        mMainViewModel.welcome().observe(this, Observer {
+        viewModel.welcome().observe(this, Observer {
             binding.textWelcome.text = it
+        })
+
+        viewModel.login().observe(this, {
+            if (it) {
+                Toast.makeText(applicationContext, "Sucesso!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(applicationContext, "Falha!", Toast.LENGTH_SHORT).show()
+            }
         })
     }
 
 
-
-//    override fun onClick(view: View?) {
-//        val name = binding.editName.text.toString()
-//        this.mMainViewModel.doLogin(name)
-//    }
-//
-//    fun createObservers() {
-//        mMainViewModel.welcome().observe(this, Observer {
-//            binding.textWelcome.text = it
-//        })
-//        mMainViewModel.login().observe(this, Observer {
-//            Toast.makeText(mContext, it, Toast.LENGTH_SHORT).show()
-//        })
-//    }
-//
 }

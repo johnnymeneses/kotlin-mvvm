@@ -1,5 +1,9 @@
 package com.johnny.mvvm
 
 class PersonRepository {
-    fun login(name: String) = (name != "")
+
+    fun login(email: String, password: String): Boolean {
+        return (email != "" && password != "")
+
+    }
 }
